@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Simple admin panel{% endblock %}</title>
+        {% block stylesheets %}
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    {% block page %}
+        {% block navbar %}
+        <nav class="navbar navbar-theme-color navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><i class="fa fa-code"></i> Simple admin panel</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right color-white">
+                        <li>
+                            <span class="logged-as">Logged as {{ app.user.username }}</span>
+                        </li>
+                        <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% endblock %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 main">
+                    {% block content %}
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <h1 class="page-header">Users <small>({{ users|length }})</small></h1>
+                                <div class="actions align-right">
+                                    <a class="btn btn-default" href="{{ path('add') }}"><i class="fa fa-plus"></i> Add user</a>
+                                </div>
+                                <table class="table table-hover users-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Firstname</th>
+                                            <th>Surname</th>
+                                            <th>Email</th>
+                                            <th>Password</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td class="firstname">{{ user.firstname }}</td>
+                                            <td class="surname">{{ user.surname }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.password }}</td>
+                                            <td>
+                                                <a class="btn btn-default btn-xs actions edit" href="{{ path('user_edit',{'id': user.id}) }}"><i class="fa fa-edit black"></i></a>
+                                                <a class="btn btn-default btn-xs actions delete" href="{{ path('user_delete',{'id': user.id}) }}"><i class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr class="align-center"><td colspan=5><em>No users found</em></td></tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                    {% endblock %}
+                </div>
+                </div>
+            </div>
+            {% block javascripts %}
+                <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                <script src="{{ asset('js/script.js') }}"></script>
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+            {% endblock %}
+        </body>
+    {% endblock %}
+</html>

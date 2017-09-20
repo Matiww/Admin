@@ -1,0 +1,25 @@
+body {
+    background-color: #FFFFFF;
+}
+.btn {
+    color: #000000;
+    background-color: #fff;
+    border-color: #000000;
+}
+.btn:target,
+.btn:active,
+.btn:focus,
+.btn:hover {
+    background-color: #777777 !important;
+    color: #fff !important;
+    border-color: #777777 !important;
+}
+
+.checkbox,
+.form-signin-heading {
+    color: #000000;
+    text-align: center;
+}
+.row {
+    margin: 0;
+}

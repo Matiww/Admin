@@ -1,0 +1,63 @@
+/*SIDEBAR AND MENU*/
+.navbar-theme-color {
+    background-color: #777777;
+    color: #fff;
+}
+.nav>li>a:focus,
+.nav>li>a:hover,
+.navbar-theme-color .navbar-nav>.active>a, .navbar-theme-color .navbar-nav>.active>a:focus, .navbar-theme-color .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #616161;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #616161;
+    border-color: #777777;
+}
+.color-white>li>a {
+    color: #fff;
+}
+.navbar-brand:hover,
+.navbar-brand:focus,
+.navbar-brand {
+    color: #fff;
+}
+.sidebar {
+    background-color: #fff;
+}
+.navbar-theme-color .navbar-toggle {
+    border-color: #fff;
+}
+.navbar-theme-color .navbar-toggle:hover {
+    background-color: #fff;
+}
+.navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+.navbar-toggle:hover .icon-bar {
+    background-color: #777777;
+}
+/*SIDEBAR AND MENU END*/
+.white {
+    color: #fff;
+}
+.black {
+    color: #000000;
+}
+.align-right {
+    text-align: right;
+}
+.align-center {
+    text-align: center;
+}
+.users-table {
+    text-align: center;
+}
+.users-table thead tr th {
+    text-align: center;
+    width:20%;
+}
+.logged-as {
+    position: relative;
+    display: block;
+    padding: 15px 15px;
+}
