@@ -3,6 +3,7 @@
 Live - http://matiww.hekko24.pl/Admin/web/login
 
 Database schema update
+
 php bin/console doctrine:schema:update --force
 
 or
