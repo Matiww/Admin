@@ -1,6 +1,6 @@
 # Simple admin panel written in Symfony 3.3.2
 
-Live - http://matiww.hekko24.pl/Admin/web/login
+Live - http://matiww.hekko24.pl/Admin/web
 
 Database schema update
 
