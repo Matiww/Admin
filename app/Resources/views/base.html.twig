@@ -48,6 +48,12 @@
                                 <div class="actions align-right">
                                     <a class="btn btn-default" href="{{ path('add') }}"><i class="fa fa-plus"></i> Add user</a>
                                 </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6 table-container">
                                 <table class="table table-hover users-table">
                                     <thead>
                                         <tr>
@@ -65,7 +71,8 @@
                                             <td class="surname">{{ user.surname }}</td>
                                             <td>{{ user.email }}</td>
                                             <td>{{ user.password }}</td>
-                                            <td>
+                                            <td class="list-actions">
+                                                <a data-id="{{ user.id }}" class="btn btn-default btn-xs actions details" href="#"><i class="fa fa-info black"></i></a>
                                                 <a class="btn btn-default btn-xs actions edit" href="{{ path('user_edit',{'id': user.id}) }}"><i class="fa fa-edit black"></i></a>
                                                 <a class="btn btn-default btn-xs actions delete" href="{{ path('user_delete',{'id': user.id}) }}"><i class="fa fa-trash"></i></a>
                                             </td>
@@ -78,16 +85,44 @@
                             </div>
                             <div class="col-md-3"></div>
                         </div>
-
                     {% endblock %}
                 </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="loader"></div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <ol class="user-emails">
+
+                                   </ol>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input type="email" name="email" class="form-control email_input" placeholder="Type email here">
+                                </div>
+                                <div class="col-md-2 submit-email-container">
+                                        <button type="button" class="btn btn-default submit_email"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
+                                </div>
+                            </div>
+                            <div class="error">Email already exists</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% block javascripts %}
                 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
                 <script src="{{ asset('js/script.js') }}"></script>
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
             {% endblock %}
         </body>
     {% endblock %}
