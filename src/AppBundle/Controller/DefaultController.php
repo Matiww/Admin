@@ -4,8 +4,11 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\SystemUser;
+use AppBundle\Entity\Email;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -113,5 +116,71 @@ class DefaultController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("/getEmails", name="get_emails")
+     */
+    public function getUserEmailsAction(Request $request) {
+        $user_id = $request->request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $user_additional_emails = $em->getRepository('AppBundle:Email')->findBy(array('user' => $user_id));
+        $user = $em->getRepository('AppBundle:SystemUser')->find($user_id);
+        $user_emails = array();
+        if(!empty($user_additional_emails)) {
+            foreach($user_additional_emails as $key => $value) {
+                $user_emails['emails'][$key]['id'] = $value->getId();
+                $user_emails['emails'][$key]['label'] = $value->getEmail();
+            }
+        } else {
+            $user_emails['emails'] = array();
+        }
+        $user_emails['name'] = $user->getFirstname();
+        $user_emails['email'] = $user->getEmail();
+        return new JsonResponse($user_emails);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("/deleteEmail/{id}", name="email_delete")
+     */
+    public function deleteEmail(Request $request, Email $id) {
+        $em = $this->getDoctrine()->getManager();
+        $email = $em->getRepository('AppBundle:Email')->find($id);
+        $em->remove($email);
+        $em->flush();
+
+        return new JsonResponse('success');
+    }
+
+    /**
+     * @return Response
+     * @Route("/addEmail", name="add_email")
+     */
+    public function addEmailAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:SystemUser')->find($request->request->get('id'));
+        $emails = $em->getRepository('AppBundle:Email')->findBy(array('user' => $request->request->get('id')));
+
+        if(!empty($emails)) {
+            foreach($emails as $value) {
+                if(strtolower($value->getEmail()) === strtolower($request->request->get('email'))) {
+                    return new JsonResponse(array('success' => false));
+                    exit;
+                }
+            }
+        }
+
+        $email = new Email();
+        $email->setEmail($request->request->get('email'));
+        $email->setUser($user);
+
+        $em->persist($email);
+        $em->flush();
+
+        return new JsonResponse(array('success' => true, 'label' => $email->getEmail(), 'id' => $email->getId()));
     }
 }
